@@ -1,5 +1,5 @@
 # staking-single
-
+使用BSC cake-pool版本的masterChef，二次开发，进行单质押KiKiToken挖KiKiToken
 
 
 ## Getting started

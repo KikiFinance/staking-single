@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "./interfaces/IERC20Mintable.sol";
 import "./SyrupBar.sol";
 
-// MasterChef is the master of KiKi. He can make KiKi and he is a fair guy.
+// MasterChef is the master of kiki. He can make kiki and he is a fair guy.
 //
 // Note that it's ownable and the owner wields tremendous power. The ownership
 // will be transferred to a governance smart contract once KIKI is sufficiently
@@ -22,7 +22,7 @@ contract MasterChef is Ownable {
 
     // Info of each user.
     struct UserInfo {
-        uint256 amount;     // How many LP tokens the user has provided.
+        uint256 amount; // How many LP tokens the user has provided.
         uint256 rewardDebt; // Reward debt. See explanation below.
         //
         // We do some fancy math here. Basically, any point in time, the amount of KIKIs
@@ -46,19 +46,19 @@ contract MasterChef is Ownable {
     }
 
     // The KIKI TOKEN!
-    IERC20Mintable public KiKi;
+    IERC20Mintable public kiki;
     // The SYRUP TOKEN!
     SyrupBar public syrup;
     // KIKI tokens created per block.
-    uint256 public KiKiPerBlock;
-    // Bonus muliplier for early KiKi makers.
+    uint256 public kikiPerBlock;
+    // Bonus muliplier for early kiki makers.
     uint256 public BONUS_MULTIPLIER = 1;
 
     // Info of each pool.
     PoolInfo[] public poolInfo;
     // Info of each user that stakes LP tokens.
-    mapping (uint256 => mapping (address => UserInfo)) public userInfo;
-    // Total allocation poitns. Must be the sum of all allocation points in all pools.
+    mapping(uint256 => mapping(address => UserInfo)) public userInfo;
+    // Total allocation points. Must be the sum of all allocation points in all pools.
     uint256 public totalAllocPoint = 0;
     // The block number when KIKI mining starts.
     uint256 public startBlock;
@@ -68,19 +68,19 @@ contract MasterChef is Ownable {
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
 
     constructor(
-        IERC20Mintable _KiKi,
+        IERC20Mintable _kiki,
         SyrupBar _syrup,
-        uint256 _KiKiPerBlock,
+        uint256 _kikiPerBlock,
         uint256 _startBlock
     ) public {
-        KiKi = _KiKi;
+        kiki = _kiki;
         syrup = _syrup;
-        KiKiPerBlock = _KiKiPerBlock;
+        kikiPerBlock = _kikiPerBlock;
         startBlock = _startBlock;
 
         // staking pool
         poolInfo.push(PoolInfo({
-            lpToken: IERC20(address(_KiKi)),
+            lpToken: IERC20(address(_kiki)),
             allocPoint: 1000,
             lastRewardBlock: startBlock,
             accKiKiPerShare: 0
@@ -147,15 +147,15 @@ contract MasterChef is Ownable {
     }
 
     // View function to see pending KIKIs on frontend.
-    function pendingKiKi(uint256 _pid, address _user) external view returns (uint256) {
+    function pendingkiki(uint256 _pid, address _user) external view returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
         uint256 accKiKiPerShare = pool.accKiKiPerShare;
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
         if (block.number > pool.lastRewardBlock && lpSupply != 0) {
             uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-            uint256 KiKiReward = multiplier.mul(KiKiPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-            accKiKiPerShare = accKiKiPerShare.add(KiKiReward.mul(1e12).div(lpSupply));
+            uint256 kikiReward = multiplier.mul(kikiPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+            accKiKiPerShare = accKiKiPerShare.add(kikiReward.mul(1e12).div(lpSupply));
         }
         return user.amount.mul(accKiKiPerShare).div(1e12).sub(user.rewardDebt);
     }
@@ -180,9 +180,9 @@ contract MasterChef is Ownable {
             return;
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-        uint256 KiKiReward = multiplier.mul(KiKiPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-        KiKi.mint(address(syrup), KiKiReward);
-        pool.accKiKiPerShare = pool.accKiKiPerShare.add(KiKiReward.mul(1e12).div(lpSupply));
+        uint256 kikiReward = multiplier.mul(kikiPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+        kiki.mint(address(syrup), kikiReward);
+        pool.accKiKiPerShare = pool.accKiKiPerShare.add(kikiReward.mul(1e12).div(lpSupply));
         pool.lastRewardBlock = block.number;
     }
 
@@ -280,7 +280,7 @@ contract MasterChef is Ownable {
         user.rewardDebt = 0;
     }
 
-    // Safe KiKi transfer function, just in case if rounding error causes pool to not have enough KIKIs.
+    // Safe kiki transfer function, just in case if rounding error causes pool to not have enough KIKIs.
     function safeKiKiTransfer(address _to, uint256 _amount) internal {
         syrup.safeKiKiTransfer(_to, _amount);
     }

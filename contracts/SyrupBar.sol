@@ -17,21 +17,21 @@ contract SyrupBar is ERC20('SyrupBar Token', 'SYRUP'), Ownable {
     }
 
     // The KIKI TOKEN!
-    IERC20Mintable public KiKi;
+    IERC20Mintable public kiki;
 
     constructor(
-        IERC20Mintable _KiKi
+        IERC20Mintable _kiki
     ) public {
-        KiKi = _KiKi;
+        kiki = _kiki;
     }
 
-    // Safe KiKi transfer function, just in case if rounding error causes pool to not have enough KIKIs.
+    // Safe kiki transfer function, just in case if rounding error causes pool to not have enough KIKIs.
     function safeKiKiTransfer(address _to, uint256 _amount) public onlyOwner {
-        uint256 KiKiBal = KiKi.balanceOf(address(this));
-        if (_amount > KiKiBal) {
-            KiKi.transfer(_to, KiKiBal);
+        uint256 kikiBal = kiki.balanceOf(address(this));
+        if (_amount > kikiBal) {
+            kiki.transfer(_to, kikiBal);
         } else {
-            KiKi.transfer(_to, _amount);
+            kiki.transfer(_to, _amount);
         }
     }
 }

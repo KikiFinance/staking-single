@@ -147,7 +147,7 @@ contract MasterChef is Ownable {
     }
 
     // View function to see pending KIKIs on frontend.
-    function pendingkiki(uint256 _pid, address _user) external view returns (uint256) {
+    function pendingKiKi(uint256 _pid, address _user) external view returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
         uint256 accKiKiPerShare = pool.accKiKiPerShare;

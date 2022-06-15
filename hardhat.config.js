@@ -138,7 +138,7 @@ module.exports = {
       accounts: accounts,
       chainId: 56,
       gasMultiplier: 1.5,
-      tags: ["test"],
+      tags: ["staging"],
     },
     bsctest: {
       url: `https://data-seed-prebsc-1-s1.binance.org:8545`,

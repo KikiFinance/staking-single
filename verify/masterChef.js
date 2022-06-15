@@ -6,7 +6,7 @@ async function main() {
   const MasterChef = await hre.ethers.getContract("MasterChef");
   const { KIKIToken } = await hre.getNamedAccounts();
   const syrupBar = await hre.ethers.getContract("SyrupBar") 
-  let perBlock = new BigNumber('10').multipliedBy('1000000000000000000').toFixed(0); //0%
+  let perBlock = new BigNumber('479459250000000').toFixed(0);
   let start = 0;
   const arguments = [
     KIKIToken,

@@ -20,7 +20,7 @@ module.exports = async function ({
   
   const syrupBar = await ethers.getContract("SyrupBar")
   //perBlock on ethmain
-  let perBlock = new BigNumber('2383614000000000 ').toFixed(0);
+  let perBlock = new BigNumber('2383614000000000').toFixed(0);
   if (hre.network.tags.staging) {
     //perBlock on bscmain
     perBlock = new BigNumber('479459250000000').toFixed(0);

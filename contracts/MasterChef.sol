@@ -143,7 +143,7 @@ contract MasterChef is Ownable {
         uint256 prevAllocPoint = poolInfo[_pid].allocPoint;
         poolInfo[_pid].allocPoint = _allocPoint;
         if (prevAllocPoint != _allocPoint) {
-            totalAllocPoint = totalAllocPoint.sub(poolInfo[_pid].allocPoint).add(_allocPoint);
+            totalAllocPoint = totalAllocPoint.sub(prevAllocPoint).add(_allocPoint);
             updateStakingPool();
         }
     }
@@ -208,14 +208,14 @@ contract MasterChef is Ownable {
 
     // Deposit LP tokens to MasterChef for KIKI allocation.
     function deposit(uint256 _pid, uint256 _amount) public {
-        require (_pid != 0, 'deposit KIKI by staking');
+        require (_pid != 0, "deposit KIKI by staking");
 
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         updatePool(_pid);
         if (user.amount > 0) {
             uint256 pending = user.amount.mul(pool.accKiKiPerShare).div(1e12).sub(user.rewardDebt);
-            if(pending > 0) {
+            if (pending > 0) {
                 safeKiKiTransfer(msg.sender, pending);
             }
         }
@@ -229,7 +229,7 @@ contract MasterChef is Ownable {
 
     // Withdraw LP tokens from MasterChef.
     function withdraw(uint256 _pid, uint256 _amount) public {
-        require (_pid != 0, "withdraw KIKI by unstaking");
+        require(_pid != 0, "withdraw KIKI by unstaking");
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         require(user.amount >= _amount, "withdraw: not good");

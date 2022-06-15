@@ -1,4 +1,5 @@
-const BigNumber = require('bignumber.js')
+const BigNumber = require('bignumber.js');
+const hre = require('hardhat');
 
 module.exports = async function ({
     ethers,
@@ -18,7 +19,13 @@ module.exports = async function ({
   });
   
   const syrupBar = await ethers.getContract("SyrupBar")
-  let perBlock = new BigNumber('10').multipliedBy('1000000000000000000').toFixed(0); 
+  //perBlock on ethmain
+  let perBlock = new BigNumber('2383614000000000 ').toFixed(0);
+  if (hre.network.tags.staging) {
+    //perBlock on bscmain
+    perBlock = new BigNumber('479459250000000').toFixed(0);
+  }
+  console.log("perBlock===> ", perBlock);
   await deploy('MasterChef', {
     from: deployer.address,
     args: [KIKIToken, syrupBar.address, perBlock, 0],

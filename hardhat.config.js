@@ -62,7 +62,13 @@ module.exports = {
       3: '0x49554923b9361e158Fb267B436f843a4f537D53a',
       97: '0x49554923b9361e158Fb267B436f843a4f537D53a',
       5: '0x49554923b9361e158Fb267B436f843a4f537D53a',
+      56: '0x49554923b9361e158Fb267B436f843a4f537D53a',
       1: '0xF512b1A940bA9c1E4826f64ef20b35fE186c1061',
+    },
+    KIKIToken: {
+      default: 0,
+      5: '0x04E4b5FbC19f947E9A3D822c8Cc15e455CB362dc',
+      56: '0x456469b4FCd1993A734fe7caE3bE039aB946BA9A',
     },
     signer1: {
       default: 0,
@@ -173,6 +179,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       goerli: "US1NI1JJCYFNHD7CI3584XW1WVU1RYW9WP",
+      bsc: "QRMHJUP6RQYYHBZJJ1U98RDS18VIUET4G2",
     }
   }
 };

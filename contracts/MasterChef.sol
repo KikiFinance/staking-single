@@ -66,6 +66,8 @@ contract MasterChef is Ownable {
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
+    event NewKiKiPerBlock(uint oldKiKiPerBlock, uint newKiKiPerBlock);
+    event NewMultiplier(uint oldMultiplier, uint newMultiplier);
 
     constructor(
         IERC20Mintable _kiki,
@@ -90,8 +92,20 @@ contract MasterChef is Ownable {
 
     }
 
-    function updateMultiplier(uint256 multiplierNumber) public onlyOwner {
+    function updateMultiplier(uint256 multiplierNumber, bool withUpdate) external onlyOwner {
+        if (withUpdate) {
+            massUpdatePools();
+        }
+        emit NewMultiplier(BONUS_MULTIPLIER, multiplierNumber);
         BONUS_MULTIPLIER = multiplierNumber;
+    }
+
+    function updateKiKiPerBlock(uint256 _kikiPerBlock, bool _withUpdate) external onlyOwner {
+        if (_withUpdate) {
+            massUpdatePools();
+        }
+        emit NewKiKiPerBlock(kikiPerBlock, _kikiPerBlock);
+        kikiPerBlock = _kikiPerBlock;
     }
 
     function poolLength() external view returns (uint256) {

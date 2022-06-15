@@ -3,20 +3,14 @@ const BigNumber = require('bignumber.js')
 
 async function main() {
 
-  const MasterChef = await hre.ethers.getContract("MasterChef");
   const { KIKIToken } = await hre.getNamedAccounts();
-  const syrupBar = await hre.ethers.getContract("SyrupBar") 
-  let perBlock = new BigNumber('10').multipliedBy('1000000000000000000').toFixed(0); //0%
-  let start = 0;
+  const SyrupBar = await hre.ethers.getContract("SyrupBar") 
   const arguments = [
     KIKIToken,
-    syrupBar.address,
-    perBlock,
-    start,
   ];
 
   await hre.run("verify:verify", {
-  address: MasterChef.address,
+  address: SyrupBar.address,
   constructorArguments: arguments,
 });
 }

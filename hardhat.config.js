@@ -4,6 +4,7 @@ require('hardhat-deploy');
 require ('hardhat-abi-exporter');
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan")
+require("dotenv/config")
 
 let accounts = [];
 var fs = require("fs");
@@ -63,10 +64,11 @@ module.exports = {
       97: '0x49554923b9361e158Fb267B436f843a4f537D53a',
       5: '0x49554923b9361e158Fb267B436f843a4f537D53a',
       56: '0x49554923b9361e158Fb267B436f843a4f537D53a',
-      1: '0xF512b1A940bA9c1E4826f64ef20b35fE186c1061',
+      1: '0x11C1CaB6B01887f77B708BDdBd80db480D9B36c2',
     },
     KIKIToken: {
       default: 0,
+      1: '0x82ca5FCd9eF2D6cEEb49a057bb11c3E091560979',
       5: '0x04E4b5FbC19f947E9A3D822c8Cc15e455CB362dc',
       56: '0x456469b4FCd1993A734fe7caE3bE039aB946BA9A',
     },
@@ -121,13 +123,13 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     ethmain: {
-      url: `https://mainnet.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+      url: `https://mainnet.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
       accounts: accounts,
       chainId: 1,
       gasMultiplier: 1.5,
     },
     ethtest: {
-      url: `https://rinkeby.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+      url: `https://rinkeby.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
       accounts: accounts,
       chainId: 3,
       gasMultiplier: 1.5,
@@ -148,7 +150,7 @@ module.exports = {
       tags: ["test"],
     },
     goerli: {
-      url: `https://goerli.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+      url: `https://goerli.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
       timeout: 100000,
       accounts: accounts,
       chainId: 5,
@@ -159,7 +161,7 @@ module.exports = {
       forking: {
         enabled: false,
         //url: `https://bsc-dataseed1.defibit.io/`
-        url: `https://ropsten.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+        url: `https://ropsten.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
         //url: `https://bsc-dataseed1.ninicoin.io/`,
         //url: `https://bsc-dataseed3.binance.org/`
         //url: `https://data-seed-prebsc-1-s1.binance.org:8545`
@@ -178,8 +180,9 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      goerli: "US1NI1JJCYFNHD7CI3584XW1WVU1RYW9WP",
-      bsc: "QRMHJUP6RQYYHBZJJ1U98RDS18VIUET4G2",
+      mainnet: process.env.ETH_ETHERSCAN_API_KEY,
+      goerli: process.env.ETH_ETHERSCAN_API_KEY,
+      bsc: process.env.BSC_ETHERSCAN_API_KEY,
     }
   }
 };

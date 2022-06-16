@@ -13,6 +13,7 @@
     "hardhat-deploy": "^0.11.10"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "hardhat-abi-exporter": "^2.9.0",
     "hardhat-gas-reporter": "^1.0.8",
     "keythereum": "^1.2.0",

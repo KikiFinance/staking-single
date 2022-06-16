@@ -4,6 +4,7 @@ require('hardhat-deploy');
 require ('hardhat-abi-exporter');
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan")
+require("dotenv/config")
 
 let accounts = [];
 var fs = require("fs");
@@ -122,13 +123,13 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     ethmain: {
-      url: `https://mainnet.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+      url: `https://mainnet.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
       accounts: accounts,
       chainId: 1,
       gasMultiplier: 1.5,
     },
     ethtest: {
-      url: `https://rinkeby.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+      url: `https://rinkeby.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
       accounts: accounts,
       chainId: 3,
       gasMultiplier: 1.5,
@@ -149,7 +150,7 @@ module.exports = {
       tags: ["test"],
     },
     goerli: {
-      url: `https://goerli.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+      url: `https://goerli.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
       timeout: 100000,
       accounts: accounts,
       chainId: 5,
@@ -160,7 +161,7 @@ module.exports = {
       forking: {
         enabled: false,
         //url: `https://bsc-dataseed1.defibit.io/`
-        url: `https://ropsten.infura.io/v3/5e5a1756169b4617bb6a47d9dbffb3be`,
+        url: `https://ropsten.infura.io/v3/${process.env.ETH_INFURA_API_KEY}`,
         //url: `https://bsc-dataseed1.ninicoin.io/`,
         //url: `https://bsc-dataseed3.binance.org/`
         //url: `https://data-seed-prebsc-1-s1.binance.org:8545`
@@ -179,9 +180,9 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      mainnet: "US1NI1JJCYFNHD7CI3584XW1WVU1RYW9WP",
-      goerli: "US1NI1JJCYFNHD7CI3584XW1WVU1RYW9WP",
-      bsc: "QRMHJUP6RQYYHBZJJ1U98RDS18VIUET4G2",
+      mainnet: process.env.ETH_ETHERSCAN_API_KEY,
+      goerli: process.env.ETH_ETHERSCAN_API_KEY,
+      bsc: process.env.BSC_ETHERSCAN_API_KEY,
     }
   }
 };

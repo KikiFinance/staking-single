@@ -1,0 +1,17 @@
+node_modules
+
+#Hardhat files
+cache
+artifacts
+abi
+.secret
+.env
+
+.DS_Store
+.vscode
+*copy*
+*new*
+*old*
+nnemonic.json
+package-lock.json
+.secret

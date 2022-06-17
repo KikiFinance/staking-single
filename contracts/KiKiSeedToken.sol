@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IERC20Mintable.sol";
 
-// SyrupBar with Governance.
-contract SyrupBar is ERC20("SyrupBar Token", "SYRUP"), Ownable {
+// KiKiSeedToken with Governance.
+contract KiKiSeedToken is ERC20("KiKi Seed Token", "KIKISEED"), Ownable {
     /// @dev Creates `_amount` token to `_to`. Must only be called by the owner (MasterChef).
     function mint(address _to, uint256 _amount) public onlyOwner {
         _mint(_to, _amount);

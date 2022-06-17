@@ -2,7 +2,7 @@
 
 This is kiki single asset yielding contract. The development is based on pancake masterchef v1.
 
-user can stake $KIKI token to earn $KIKI token
+User can stake $KIKI token to earn $KIKI token
 
 ## release notes
 

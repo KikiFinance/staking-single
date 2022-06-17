@@ -4,13 +4,13 @@ const BigNumber = require('bignumber.js')
 async function main() {
 
   const { KIKIToken } = await hre.getNamedAccounts();
-  const KiKiSeed = await hre.ethers.getContract("KiKiSeed") 
+  const KiKiSeedToken = await hre.ethers.getContract("KiKiSeedToken") 
   const arguments = [
     KIKIToken,
   ];
 
   await hre.run("verify:verify", {
-  address: KiKiSeed.address,
+  address: KiKiSeedToken.address,
   constructorArguments: arguments,
 });
 }

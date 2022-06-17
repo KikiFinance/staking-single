@@ -5,11 +5,11 @@ const BigNumber = require('bignumber.js')
 let SatusToCheck = function () {
    return {
     "stakingInMasterChef" : 0,
-    "stakingInSyrupBar" : 0,
+    "stakingInKiKiSeedToken" : 0,
     "accountBalanceInKiKi" : 0,
     "totalSupplyInKiKi" : 0,
-    "totalSupplyInSyrupBar" : 0,
-    "syrupBalanceInKiKi" : 0,
+    "totalSupplyInKiKiSeedToken" : 0,
+    "kikiSeedTokenBalanceInKiKi" : 0,
     "lpSupplyInMasterChef" : 0
     }
 }
@@ -45,14 +45,14 @@ async function recordMasterChefParams(masterChef) {
     return masterChefStatus;
 }
 
-async function recordOldStatusInContracts(account, kikiToken, syrupBar, masterChef) {
+async function recordOldStatusInContracts(account, kikiToken, kikiSeedToken, masterChef) {
     let statusToCheck = new SatusToCheck;
     statusToCheck.stakingInMasterChef = await kikiToken.balanceOf(masterChef.address);
-    statusToCheck.stakingInSyrupBar = await syrupBar.balanceOf(account);
+    statusToCheck.stakingInKiKiSeedToken = await kikiSeedToken.balanceOf(account);
     statusToCheck.accountBalanceInKiKi = await kikiToken.balanceOf(account);
     statusToCheck.totalSupplyInKiKi = await kikiToken.totalSupply();
-    statusToCheck.totalSupplyInSyrupBar = await syrupBar.totalSupply();
-    statusToCheck.syrupBalanceInKiKi = await kikiToken.balanceOf(syrupBar.address);
+    statusToCheck.totalSupplyInKiKiSeedToken = await kikiSeedToken.totalSupply();
+    statusToCheck.kikiSeedTokenBalanceInKiKi = await kikiToken.balanceOf(kikiSeedToken.address);
     statusToCheck.lpSupplyInMasterChef = statusToCheck.stakingInMasterChef;
     return statusToCheck;
 }
@@ -62,12 +62,12 @@ async function updateNewStatus(account, amount, pool, user, blockNumber, masterC
         masterChefStatus.kikiPerBlock, masterChefStatus.totalAllocPoint, masterChefStatus.BONUS_MULTIPLIER);
     let pending = pendingResult[0];
     let totalPending = pendingResult[1];
-    statusToCheck.syrupBalanceInKiKi = statusToCheck.syrupBalanceInKiKi.add(totalPending).sub(pending);
+    statusToCheck.kikiSeedTokenBalanceInKiKi = statusToCheck.kikiSeedTokenBalanceInKiKi.add(totalPending).sub(pending);
     statusToCheck.accountBalanceInKiKi = statusToCheck.accountBalanceInKiKi.add(pending).add(amount);
     statusToCheck.totalSupplyInKiKi = statusToCheck.totalSupplyInKiKi.add(totalPending);
     statusToCheck.stakingInMasterChef = statusToCheck.stakingInMasterChef.sub(amount);
-    statusToCheck.stakingInSyrupBar = statusToCheck.stakingInSyrupBar.sub(amount);
-    statusToCheck.totalSupplyInSyrupBar = statusToCheck.totalSupplyInSyrupBar.sub(amount);
+    statusToCheck.stakingInKiKiSeedToken = statusToCheck.stakingInKiKiSeedToken.sub(amount);
+    statusToCheck.totalSupplyInKiKiSeedToken = statusToCheck.totalSupplyInKiKiSeedToken.sub(amount);
     return statusToCheck;
 }
 

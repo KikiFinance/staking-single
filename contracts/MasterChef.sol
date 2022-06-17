@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 import "./interfaces/IERC20Mintable.sol";
-import "./SyrupBar.sol";
+import "./KiKiSeedToken.sol";
 
 // MasterChef is the master of kiki. He can make kiki and he is a fair guy.
 //
@@ -47,8 +47,8 @@ contract MasterChef is Ownable {
 
     // The KIKI TOKEN!
     IERC20Mintable public kiki;
-    // The SYRUP TOKEN!
-    SyrupBar public syrup;
+    // The KIKISEED TOKEN!
+    KiKiSeedToken public kikiSeed;
     // KIKI tokens created per block.
     uint256 public kikiPerBlock;
     // Bonus muliplier for early kiki makers.
@@ -71,12 +71,12 @@ contract MasterChef is Ownable {
 
     constructor(
         IERC20Mintable _kiki,
-        SyrupBar _syrup,
+        KiKiSeedToken _kikiSeed,
         uint256 _kikiPerBlock,
         uint256 _startBlock
     ) public {
         kiki = _kiki;
-        syrup = _syrup;
+        kikiSeed = _kikiSeed;
         kikiPerBlock = _kikiPerBlock;
         startBlock = _startBlock;
 
@@ -201,7 +201,7 @@ contract MasterChef is Ownable {
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
         uint256 kikiReward = multiplier.mul(kikiPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-        kiki.mint(address(syrup), kikiReward);
+        kiki.mint(address(kikiSeed), kikiReward);
         pool.accKiKiPerShare = pool.accKiKiPerShare.add(kikiReward.mul(1e12).div(lpSupply));
         pool.lastRewardBlock = block.number;
     }
@@ -264,7 +264,7 @@ contract MasterChef is Ownable {
         }
         user.rewardDebt = user.amount.mul(pool.accKiKiPerShare).div(1e12);
 
-        syrup.mint(msg.sender, _amount);
+        kikiSeed.mint(msg.sender, _amount);
         emit Deposit(msg.sender, 0, _amount);
     }
 
@@ -284,7 +284,7 @@ contract MasterChef is Ownable {
         }
         user.rewardDebt = user.amount.mul(pool.accKiKiPerShare).div(1e12);
 
-        syrup.burn(msg.sender, _amount);
+        kikiSeed.burn(msg.sender, _amount);
         emit Withdraw(msg.sender, 0, _amount);
     }
 
@@ -300,6 +300,6 @@ contract MasterChef is Ownable {
 
     // Safe kiki transfer function, just in case if rounding error causes pool to not have enough KIKIs.
     function safeKiKiTransfer(address _to, uint256 _amount) internal {
-        syrup.safeKiKiTransfer(_to, _amount);
+        kikiSeed.safeKiKiTransfer(_to, _amount);
     }
 }

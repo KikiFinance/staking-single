@@ -28,7 +28,7 @@ module.exports = async function ({
   console.log("perBlock===> ", perBlock);
   await deploy('MasterChef', {
     from: deployer.address,
-    args: [KIKIToken, kikiSeedToken.address, perBlock, 14977655],
+    args: [KIKIToken, kikiSeedToken.address, perBlock, 14985000],
     log: true,
   });
 
@@ -38,7 +38,7 @@ module.exports = async function ({
   console.log("transfer kikiSeedToken contract owner to: ", masterChef.address);
 
   let newMasterChefOwner = "0xab1dcF03ce47Cf5cc0cB1AdB06b772373d2A4E59";
-  if (hre.network.tags.staging) {
+  if (hre.network.tags.staging || hre.network.tags.test) {
     newMasterChefOwner = deployer.address;
   }
   tx = await masterChef.connect(deployer).transferOwnership(newMasterChefOwner);
